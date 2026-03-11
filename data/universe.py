@@ -7,7 +7,8 @@ import requests
 from pathlib import Path
 from loguru import logger
 
-CACHE_PATH = Path("data/cache/universe.csv")
+import os
+CACHE_PATH = Path("/tmp/alphaforge/universe.csv") if not os.access("data", os.W_OK) else Path("data/cache/universe.csv")
 
 # Nifty 500 sector buckets (sampled — extend as needed)
 NIFTY500_SYMBOLS = {

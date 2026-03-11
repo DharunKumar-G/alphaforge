@@ -8,7 +8,8 @@ from pathlib import Path
 from loguru import logger
 from datetime import datetime, timedelta
 
-CACHE_DIR = Path("data/cache/prices")
+import os
+CACHE_DIR = Path("/tmp/alphaforge/prices") if not os.access("data", os.W_OK) else Path("data/cache/prices")
 
 
 def _cache_path(symbol: str) -> Path:

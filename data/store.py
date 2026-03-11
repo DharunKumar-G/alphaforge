@@ -11,11 +11,24 @@ def get_connection() -> sqlite3.Connection:
     Path(SQLITE_DB_PATH).parent.mkdir(parents=True, exist_ok=True)
     conn = sqlite3.connect(SQLITE_DB_PATH, check_same_thread=False)
     conn.row_factory = sqlite3.Row
+    _ensure_tables(conn)
     return conn
 
 
-def init_db():
-    conn = get_connection()
+def _ensure_tables(conn: sqlite3.Connection):
+    """Auto-create tables if they don't exist (needed on Streamlit Cloud)."""
+    cur = conn.cursor()
+    cur.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='universe'")
+    if cur.fetchone() is None:
+        init_db(conn)
+
+
+def init_db(conn=None):
+    close_after = False
+    if conn is None:
+        Path(SQLITE_DB_PATH).parent.mkdir(parents=True, exist_ok=True)
+        conn = sqlite3.connect(SQLITE_DB_PATH, check_same_thread=False)
+        close_after = True
     cur = conn.cursor()
 
     cur.executescript("""
@@ -96,7 +109,8 @@ def init_db():
     """)
 
     conn.commit()
-    conn.close()
+    if close_after:
+        conn.close()
     print("DB initialized.")
 
 
