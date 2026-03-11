@@ -1,0 +1,24 @@
+# UI
+streamlit>=1.35.0
+
+# Data
+yfinance>=0.2.40
+pandas>=2.0.0
+numpy>=1.26.0
+requests
+
+# Visualization
+plotly>=5.20.0
+
+# ML
+scikit-learn>=1.4.0
+xgboost>=2.0.0
+scipy
+
+# AI (Gemini)
+google-genai>=1.0.0
+
+# Utilities
+python-dotenv
+pyyaml
+loguru

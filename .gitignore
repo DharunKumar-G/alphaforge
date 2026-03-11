@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+.env
+data/raw/
+data/cache/
+data/db/
+*.db
+.streamlit/secrets.toml
+*.log
+.venv/
+venv/
