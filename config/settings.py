@@ -17,7 +17,7 @@ def _get_gemini_key():
         return ""
 
 GEMINI_API_KEY = _get_gemini_key()
-GEMINI_MODEL = "gemma-3-4b-it"
+GEMINI_MODEL = "gemini-2.0-flash"
 
 # Database — use /tmp on Streamlit Cloud (writable), local path otherwise
 _default_db = "/tmp/alphaforge.db" if os.getenv("STREAMLIT_SHARING_MODE") or not os.access(".", os.W_OK) else "data/db/alphaforge.db"
