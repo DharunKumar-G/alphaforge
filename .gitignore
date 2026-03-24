@@ -5,7 +5,6 @@ data/raw/
 data/cache/
 data/db/
 *.db
-.streamlit/secrets.toml
 *.log
 .venv/
 venv/
