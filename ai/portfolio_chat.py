@@ -46,12 +46,15 @@ def render_chat(backtest_result: dict):
             response_placeholder = st.empty()
             full_response = ""
 
-            system = PORTFOLIO_SYSTEM
-            for chunk in stream_chat(system, messages):
-                full_response += chunk
-                response_placeholder.markdown(full_response + "▌")
-
-            response_placeholder.markdown(full_response)
+            try:
+                system = PORTFOLIO_SYSTEM
+                for chunk in stream_chat(system, messages):
+                    full_response += chunk
+                    response_placeholder.markdown(full_response + "▌")
+                response_placeholder.markdown(full_response)
+            except Exception as e:
+                full_response = "AI chat is unavailable — Gemini API key not configured."
+                response_placeholder.warning(full_response)
 
         st.session_state.chat_messages.append({
             "role": "assistant",

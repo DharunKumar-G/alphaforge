@@ -82,7 +82,10 @@ with col_right:
             for _, row in recent.iterrows()
         ])
         with st.spinner("Generating suggestions..."):
-            suggestions = chat(JOURNAL_AI_SYSTEM, context, max_tokens=800)
+            try:
+                suggestions = chat(JOURNAL_AI_SYSTEM, context, max_tokens=800)
+            except Exception:
+                suggestions = "AI suggestions unavailable — GEMINI_API_KEY not configured."
         st.session_state.journal_suggestions = suggestions
 
     if "journal_suggestions" in st.session_state:

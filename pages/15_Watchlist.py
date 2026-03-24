@@ -114,7 +114,10 @@ if st.button("Generate AI Commentary for All Stocks", type="primary"):
                             f"composite={row.get('composite', 0):.2f}\n")
 
         with st.spinner("Generating commentary..."):
-            commentary = chat(COMMENTARY_SYSTEM, context, max_tokens=600)
+            try:
+                commentary = chat(COMMENTARY_SYSTEM, context, max_tokens=600)
+            except Exception:
+                commentary = "AI commentary unavailable — GEMINI_API_KEY not configured."
 
         st.session_state.watchlist_commentary = commentary
 

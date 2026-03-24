@@ -58,8 +58,14 @@ with tab_nl:
 
     if run_nl and query:
         with st.spinner("Parsing query with AI..."):
-            filters = parse_query_to_filters(query)
-            st.session_state.nl_filters = filters
+            try:
+                filters = parse_query_to_filters(query)
+                st.session_state.nl_filters = filters
+            except Exception as e:
+                if "AIUnavailableError" in type(e).__name__ or "API key" in str(e):
+                    st.warning("AI screening requires a Gemini API key. Use the **Manual Filters** tab instead.")
+                else:
+                    st.error(f"AI parsing failed: {e}. Use Manual Filters tab.")
 
     if "nl_filters" in st.session_state:
         filters = st.session_state.nl_filters

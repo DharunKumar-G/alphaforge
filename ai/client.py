@@ -10,7 +10,16 @@ from config.settings import GEMINI_API_KEY, GEMINI_MODEL
 _SUPPORTS_SYSTEM_PROMPT = not GEMINI_MODEL.startswith("gemma")
 
 
+class AIUnavailableError(Exception):
+    """Raised when no Gemini API key is configured."""
+    pass
+
+
 def _get_client():
+    if not GEMINI_API_KEY:
+        raise AIUnavailableError(
+            "Gemini API key not configured. Add GEMINI_API_KEY to Streamlit secrets."
+        )
     return genai.Client(api_key=GEMINI_API_KEY)
 
 

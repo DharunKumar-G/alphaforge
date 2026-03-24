@@ -27,8 +27,11 @@ with tab2:
                               placeholder="e.g. This strategy is for a 3-year investment horizon...")
         if st.button("Generate Critique", type="primary"):
             with st.spinner("Analyzing strategy..."):
-                critique = critique_strategy(st.session_state.backtest_result, extra)
-            st.markdown(critique)
+                try:
+                    critique = critique_strategy(st.session_state.backtest_result, extra)
+                    st.markdown(critique)
+                except Exception:
+                    st.warning("AI critique requires a Gemini API key. Add GEMINI_API_KEY to Streamlit secrets.")
 
 with tab3:
     st.subheader("Compare Two Strategies")
